@@ -30,7 +30,7 @@ function Contacts() {
     const [rowsPerPage,setRowsPerPage]=useState(5);
 
     const [open,setOpen]=useState(false);
-    
+    const [editValue,setEditValue]=useState([]);
    
     useEffect( () => {
         
@@ -81,10 +81,13 @@ function Contacts() {
 
      const handleClick=(contact)=>{
          setOpen(true);
+         setEditValue(contact)
          //<UpdateContact contact={contact} />
      }
      const handleClose = (newValue) => {
+
         setOpen(newValue);
+        setEditValue([]);
     };
 
     return (
@@ -119,8 +122,7 @@ function Contacts() {
                                                                          
                                     <IconButton component="span" color="primary" onClick={()=>handleClick(contact)} ><EditIcon/></IconButton>
                                     {console.log("in contacts open value =>",open)}
-                                    {open && <UpdateContact open={open} contact={contact} getcontacts={getContacts} onChange={handleClose} />} 
-                                            
+                                                                                
 
                                 </TableCell>
                             </TableRow>
@@ -131,6 +133,7 @@ function Contacts() {
                 </TableBody>                
                 
             </Table>
+            
             <TablePagination
             rowsPerPageOptions={[5, 10, 25]} 
             component="div"
@@ -142,6 +145,7 @@ function Contacts() {
             />
         </TableContainer>
       </Paper>
+      {open && <UpdateContact open={open} contact={editValue} getcontacts={getContacts} onChange={handleClose} />}
       
      
     </>
